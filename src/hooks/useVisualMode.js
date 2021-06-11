@@ -5,9 +5,6 @@ const useVisualMode = (initMode) => {
   const transition = (newMode, replace = false) => {
     setHistory(prev => {
       if(replace){
-        // let replacedHistory = [...prev]
-        // replacedHistory.pop()
-        // return [...replacedHistory, newMode]
         return prev
       }
       return [...prev, mode]
