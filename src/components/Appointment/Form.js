@@ -25,6 +25,7 @@ const Form = props => {
         type="text"
         placeholder="Enter Student Name"
         value={name}
+        required
         onChange={(e) => setName(e.target.value)}
       />
     </form>

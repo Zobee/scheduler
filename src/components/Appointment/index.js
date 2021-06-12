@@ -33,7 +33,7 @@ const Appointment = props => {
 
     bookInterview(id, interview)
     .then(() => transition("SHOW"))
-    .catch(transition("ERROR_SAVE", true))
+    .catch(error => transition("ERROR_SAVE", true))
   }
 
   const update = () => {
@@ -44,7 +44,7 @@ const Appointment = props => {
     transition("DELETING", true)
     cancelInterview(id)
     .then(() => transition("EMPTY"))
-    .catch(transition("ERROR_DELETE", true))
+    .catch(error => transition("ERROR_DELETE", true))
   }
 
   const deleteAppt = () => {
