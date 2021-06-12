@@ -72,7 +72,7 @@ const Appointment = props => {
       onSave={save} 
       onCancel={back} 
       interviewers={interviewers} 
-      interviewer={interview.interviewer}
+      interviewer={interview.interviewer.id}
       name={interview.student} />}
       {mode === SAVING && <Status message={"Saving"} />}
       {mode === DELETING && <Status message={"Deleting"} />}
