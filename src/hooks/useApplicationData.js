@@ -1,4 +1,4 @@
-import {useState, useEffect, useReducer} from 'react';
+import {useEffect, useReducer} from 'react';
 import axios from 'axios'
 
 const ACTIONS = {
@@ -14,7 +14,7 @@ function reducer(state, action) {
     case ACTIONS.SET_APPLICATION_DATA:
       return {...state, days : action.all[0].data, appointments : action.all[1].data, interviewers : action.all[2].data}
     case ACTIONS.SET_INTERVIEW: {
-      return {...state, appointments: action.appointments}
+      return {...state, appointments: action.appointments, days: action.days}
     }
     default:
       throw new Error(
@@ -26,12 +26,6 @@ function reducer(state, action) {
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {day: "Monday", days: [], appointments: {}, interviewers: {}})
-  // const [state, setState] = useState({
-  //   day: "Monday",
-  //   days: [],
-  //   appointments: {},
-  //   interviewers: {}
-  // })
 
   useEffect(() => {
     Promise.all([
@@ -40,7 +34,6 @@ const useApplicationData = () => {
       axios.get("http://localhost:8001/api/interviewers")
     ]).then(all => {
       dispatch({type:ACTIONS.SET_APPLICATION_DATA, all})
-      //setState(prev => ({...prev, days : all[0].data, appointments : all[1].data, interviewers : all[2].data}))
     })
   },[])
   
@@ -64,7 +57,6 @@ const useApplicationData = () => {
     return days
   }
 
-  //const setDay = day => setState({ ...state, day });
   const setDay = day => dispatch({type:ACTIONS.SET_DAY, day})
 
   const bookInterview = (id, interview) => {
@@ -79,8 +71,7 @@ const useApplicationData = () => {
     const days = updateSpots(appointments)
     return axios.put(`/api/appointments/${id}`, {interview})
     .then(() => {
-      //setState(prev => ({...prev, appointments, days}))
-      dispatch({type:ACTIONS.SET_INTERVIEW, appointments})
+      dispatch({type:ACTIONS.SET_INTERVIEW, appointments, days})
     })
   }
 
@@ -96,8 +87,7 @@ const useApplicationData = () => {
     const days = updateSpots(appointments)  
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
-      //setState(prev =>({...prev, appointments, days}))
-      dispatch({type:ACTIONS.SET_INTERVIEW, appointments})
+      dispatch({type:ACTIONS.SET_INTERVIEW, appointments, days})
     })
   }
   return {state, setDay, bookInterview, cancelInterview}
