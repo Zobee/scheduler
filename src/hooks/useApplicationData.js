@@ -1,33 +1,17 @@
 import {useEffect, useReducer} from 'react';
 import axios from 'axios'
+import reducer, {ACTIONS} from "../reducers/application"
 
-const ACTIONS = {
-  SET_DAY: "SET_DAY",
-  SET_APPLICATION_DATA: "SET_APPLICATION_DATA",
-  SET_INTERVIEW: "SET_INTERVIEW"
-}
-
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.SET_DAY:
-      return {...state, day: action.day}
-    case ACTIONS.SET_APPLICATION_DATA:
-      return {...state, days : action.all[0].data, appointments : action.all[1].data, interviewers : action.all[2].data}
-    case ACTIONS.SET_INTERVIEW: {
-      return {...state, appointments: action.appointments, days: action.days}
-    }
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-}
-
+// const setSocket = () => {
+//   const ws = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL) 
+//   ws.onopen = () => ws.send("ping")
+// }
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {day: "Monday", days: [], appointments: {}, interviewers: {}})
 
   useEffect(() => {
+    //setSocket()
     Promise.all([
       axios.get("/api/days"),
       axios.get('/api/appointments'),
@@ -45,11 +29,8 @@ const useApplicationData = () => {
   }
 
   const updateSpots = (appointments) => {
-    //Get current day from state
     const currDay = {...state.days.find(scheduleDay => scheduleDay.name === state.day)}
-    //update spots based on how many appointments for that day are 'null'
     currDay.spots = getSpots(currDay, appointments)
-    //Create the new state.days object
     const newDays = [...state.days]
     const days = newDays.map(day => {
       return day.name === currDay.name ? currDay : day
