@@ -4,7 +4,7 @@ describe("Appointments", () => {
     cy.visit("/")
     cy.contains("Monday");
   })
-  it("should book an interview", () => {
+  xit("should book an interview", () => {
     // Clicks on the "Add" button in the second appointment
     cy.get("[alt=Add]")
     .first()
@@ -20,8 +20,9 @@ describe("Appointments", () => {
     cy.contains(".appointment__card--show", "Sylvia Palmer");
   })
 
-  it("should edit an interview", () => {
+  xit("should edit an interview", () => {
     cy.get("[alt=Edit]")
+    .first()
     .click({force: true})
     cy.get('[data-testid=student-name-input]').clear().type("Frank Frankson")
     cy.get("[alt='Tori Malcolm']").click()
@@ -30,12 +31,15 @@ describe("Appointments", () => {
     cy.contains(".appointment__card--show", "Tori Malcolm");
   })
 
-//   it("should cancel an interview", () => {
-//     /*
-//     Visits the root of our web server
-//     Clicks the delete button for the existing appointment
-//     Clicks the confirm button
-//     Sees that the appointment slot is empty
-//     */
-//   })
+  it("should cancel an interview", () => {
+    //Clicks the delete button for the existing appointment
+    cy.get("[alt=Delete]")
+    .first()
+    .click({force: true})
+    //Clicks the confirm button
+    cy.contains("Confirm").click()
+    //Sees that the appointment slot is empty
+    cy.contains("Deleting").should('not.exist')
+    cy.contains(".appointment__card--show", "Archie Cohen").should('not.exist')
+  })
 })
