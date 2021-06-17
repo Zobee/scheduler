@@ -3,11 +3,11 @@ import useApplicationData from "hooks/useApplicationData";
 import "components/Application.scss";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
-import DayList from 'components/DayList'
-import Appointment from 'components/Appointment'
+import DayList from 'components/DayList';
+import Appointment from 'components/Appointment';
 
-export default function Application(props) {
-  const {state, setDay, bookInterview, cancelInterview} = useApplicationData()
+export default function Application() {
+  const {state, setDay, bookInterview, cancelInterview} = useApplicationData();
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day) 
 
@@ -23,8 +23,8 @@ export default function Application(props) {
       bookInterview={bookInterview}
       cancelInterview={cancelInterview}
       />
-    )
-  })
+    );
+  });
 
   return (
     <main className="layout">
@@ -54,5 +54,4 @@ export default function Application(props) {
       </section>
     </main>
   );
-}
-
+};

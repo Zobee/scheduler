@@ -1,6 +1,6 @@
 import React from "react";
 import "components/Button.scss";
-import classnames from "classnames"
+import classnames from "classnames";
 
 export default function Button(props) {
    let btnClass = classnames("button", {
@@ -14,4 +14,4 @@ export default function Button(props) {
       className={btnClass}>
          {props.children}
    </button>;
-}
+};

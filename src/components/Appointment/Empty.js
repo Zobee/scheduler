@@ -10,7 +10,7 @@ const Empty = props => {
         onClick={onAdd}
     />
     </main>
-  )
-}
+  );
+};
 
-export default Empty
+export default Empty;

@@ -2,7 +2,7 @@ export const ACTIONS = {
   SET_DAY: "SET_DAY",
   SET_APPLICATION_DATA: "SET_APPLICATION_DATA",
   SET_INTERVIEW: "SET_INTERVIEW"
-}
+};
 
 export default function reducer(state, action) {
   switch (action.type) {
@@ -17,5 +17,5 @@ export default function reducer(state, action) {
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
       );
-  }
-}
+  };
+};

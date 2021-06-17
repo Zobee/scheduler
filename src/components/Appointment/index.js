@@ -1,8 +1,8 @@
 import React from 'react';
-import "components/Appointment/styles.scss"
-import Header from "./Header"
-import Show from "./Show"
-import Empty from "./Empty"
+import "components/Appointment/styles.scss";
+import Header from "./Header";
+import Show from "./Show";
+import Empty from "./Empty";
 import Confirm from './Confirm';
 import Error from './Error';
 import Status from './Status';
@@ -29,16 +29,16 @@ const Appointment = props => {
       student: name,
       interviewer
     };
-    transition("SAVING")
+    transition("SAVING");
 
     bookInterview(id, interview)
     .then(() => transition("SHOW"))
     .catch(error => transition("ERROR_SAVE", true))
-  }
+  };
 
   const update = () => {
-    transition("UPDATE")
-  }
+    transition("UPDATE");
+  };
 
   const confirmDelete = () => {
     transition("DELETING", true)
