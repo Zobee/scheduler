@@ -20,7 +20,11 @@ const Form = props => {
   const validate = () => {
     if(error) setError("");
     if(name === "") {
-      setError("Student name cannot be blank")
+      setError(prev => `${prev}\nStudent name cannot be blank`)
+      return;
+    }
+    if(interviewer === null) {
+      setError(prev => `${prev}\nPlease select an interviewer`)
       return;
     }
     props.onSave(name, interviewer);
